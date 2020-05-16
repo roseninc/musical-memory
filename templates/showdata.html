@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Show Data</title>
+    <meta charset="utf-8" />
+</head>
+
+<body>
+     <h1>Data!</h1>
+     <table>
+         <thead><tr><th>Time</th><th>Temp.</th><th>Hum.</th><th>GPSLongitude</th><th>GPSLatitude</th><th>Light</th></tr></thead>
+         {% for mydata in myClimate %}
+            <tr><td>{{ mydata.reading_time }}</td><td>{{ mydata.temp }}</td><td>{{ mydata.hum }}</td><td>{{ mydata.gpslat }}</td><td>{{ mydata.gpslong }}</td><td>{{ mydata.light }}</td></tr>         
+         {%  endfor %}
+         </tbody>
+         </table>
+<br>
+<br>
+
+</body>
+</html> 
+

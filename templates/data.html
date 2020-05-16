@@ -1,0 +1,141 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Live Data</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}" />
+	</head>
+	<body class="subpage">
+<script>
+		var live_data = {
+		gpslong : [{% for data in live_data %}
+				{{ data.gpslong }},
+				{% endfor %}],
+		gpslat : [{% for data in live_data %}
+				{{ data.gpslat }},
+				{% endfor %}],
+		temp : [{% for data in live_data %}
+				{{ data.temp }},
+				{% endfor %}],
+		hum : [{% for data in live_data %}
+				{{ data.hum }},
+				{% endfor %}],
+		light : [{% for data in live_data %}
+				{{ data.light }},
+				{% endfor %}],
+		}
+		var count_gpslong = -1;
+		var count_gpslat = -1;
+		var count_temp = -1;
+		var count_hum = -1;
+		var count_light = -1;
+
+
+		for (var i = 0; i < live_data.gpslong.length; i++) {
+			count_gpslong++;
+		}
+		for (var i = 0; i < live_data.gpslat.length; i++) {
+			count_gpslat++;
+		}
+		for (var i = 0; i < live_data.temp.length; i++) {
+			count_temp++;
+		}
+		for (var i = 0; i < live_data.hum.length; i++) {
+			count_hum++;
+		}
+		for (var i = 0; i < live_data.light.length; i++) {
+			count_light++;
+		}
+
+		var last_gpslat = live_data.gpslat[count_gpslat];
+		var last_gpslong = live_data.gpslong[count_gpslong];
+		var last_temp = live_data.temp[count_temp];
+		var last_hum = live_data.hum[count_hum];
+		var last_light = live_data.light[count_light];
+
+		var today = new Date();
+		var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+		var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+
+</script>
+		<!-- Header -->
+			<header id="header">
+				<div class="logo"><a href="{{ url_for('home') }}">Main Page</a></div>
+				<a href="#menu">Menu</a>
+			</header>
+
+		<!-- Nav -->
+			<nav id="menu">
+				<ul class="links">
+					<li><a href="{{ url_for('home') }}">Home</a></li>
+					<li><a href="{{ url_for('database') }}">Database</a></li>
+					<li><a href="{{ url_for('map') }}">Map</a></li>
+					<li><a href="{{ url_for('graphs') }}">Graphs</a></li>
+				</ul>
+			</nav>
+
+		<!-- One -->
+			<section class="banner half">
+				<article>
+					<img src="{{ url_for('static', filename='motherboard.jpg') }}" alt="" />
+					<div class="inner">
+						<header>
+							<h2><b>LIVE DATA</b></h2>
+						</header>
+					</div>
+				</article>
+			</section>
+
+		<!-- Two -->
+			<section id="two" class="wrapper style2">
+				<div class="inner">
+					<div class="box">
+						<div class="content">
+								<div class="table-wrapper">
+									<table id="liveData" class="alt">
+										<thead>
+											<tr><th><div align = "center">CURRENT TIME</div></th><th><div align = "center">DATE</div></th><th><div align = "center">GPS COORDINATES</div></th></tr>
+										</thead>
+										<tbody>
+											<tr id="Tr1" class="spaceUnder">
+												<td id="Td1" style="width:30%"><div align = "center"><script>document.write(time);</script></div></td>
+												<td style="width:30%"><div align = "center"><script>document.write(date)</script></div></td>
+												<td style="width:30%"><div align = "center"><script>document.write("Latitude: " + last_gpslat); document.write(" "); document.write("Longitude: " + last_gpslong);</script></div></td>
+											</tr>
+										<thead>
+											<tr><td style="height:50%"></td></tr>
+											<tr><td style="height:50%"></td></tr>
+											<tr><td style="height:50%"></td></tr>
+											<tr><td style="height:50%"></td></tr>
+											<tr><td style="height:50%"></td></tr>
+											<tr><th><div align = "center">TEMPERATURE</div></th><th><div align = "center">HUMIDITY</div></th><th><div align = "center">LIGHT LEVEL</div></th></tr>
+										</thead>
+											<tbody>
+											<tr class="spaceUnder">
+
+												<td style="width:30%"><div align = "center"><script>document.write(last_temp);</script></div></td>
+												<td style="width:30%"><div align = "center"><script>document.write(last_hum);</script></div></td>
+												<td style="width:30%"><div align = "center"><script>document.write(last_light);</script></div></td>
+
+											</tr>
+
+											</td>
+
+											</tr>
+										</tbody>
+									</table>
+								</div>
+						</div>
+					</div>
+				</div>
+			</section>
+		<!-- Scripts -->
+			<script type="text/javascript" src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+			<script type="text/javascript" src="{{ url_for('static', filename='js/jquery.scrollex.min.js') }}"></script>
+			<script type="text/javascript" src="{{ url_for('static', filename='js/skel.min.js') }}"></script>
+			<script type="text/javascript" src="{{ url_for('static', filename='js/util.js') }}"></script>
+			<script type="text/javascript" src="{{ url_for('static', filename='js/main.js') }}"></script>
+
+	</body>
+</html>

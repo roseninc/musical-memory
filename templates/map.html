@@ -1,0 +1,159 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Map</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}" />
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.3.1/css/ol.css" type="text/css">
+		<style>
+      		.map {
+        	height: 400px;
+        	width: 100%;
+      		}
+    	</style>
+    	<script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.3.1/build/ol.js"></script>
+	</head>
+	<body class="subpage">
+		<!-- Header -->
+			<header id="header">
+				<div class="logo"><a href="{{ url_for('home') }}">Main Page</a></div>
+				<a href="#menu">Menu</a>
+			</header>
+
+		<!-- Nav -->
+			<nav id="menu">
+				<ul class="links">
+					<li><a href="{{ url_for('home') }}">Home</a></li>
+					<li><a href="{{ url_for('data') }}">Live Data</a></li>
+					<li><a href="{{ url_for('database') }}">Database</a></li>
+					<li><a href="{{ url_for('graphs') }}">Graphs</a></li>
+					
+				</ul>
+			</nav>
+
+		<!-- One -->
+			<section class="banner half">
+				<article>
+					<img src="{{ url_for('static', filename='motherboard.jpg') }}" alt="" />
+					<div class="inner">
+						<header>
+							<h2><b>MAP</b></h2>
+						</header>
+					</div>
+				</article>
+			</section>
+
+		<!-- Two -->
+			<section id="two" class="wrapper style2">
+				<div class="inner">
+					<div class="box">
+						<div class="content">
+							<div align = "center">
+								<h1>Position of devices</h1>
+    <div id="map" class="map"></div>
+    <div id="popup" class="ol-popup">
+     <a href="#" id="popup-closer" class="ol-popup-closer"></a>
+     <div id="popup-content"></div>
+    </div>
+    <script type="text/javascript">
+       var locationData = {
+        gpslong : [{% for data in gps_data %}
+          {{data.gpslong}},
+          {% endfor %}],
+        gpslat : [{% for data in gps_data %}
+           {{data.gpslat}},
+           {% endfor %}],
+        }
+        var countx = -1;
+        var county = -1;
+
+        for (var i =0; i <locationData.gpslong.length; i++){
+              countx++;
+        }
+        for (var i = 0; i <locationData.gpslat.length; i++){
+             county++;
+        }
+      var map = new ol.Map({
+        target: 'map',
+        layers: [
+          new ol.layer.Tile({
+            source: new ol.source.OSM()
+          })
+        ],
+        view: new ol.View({
+          center: ol.proj.fromLonLat([locationData.gpslong[county], locationData.gpslat[countx]]),
+          zoom: 12
+        })
+      });
+      var layer = new ol.layer.Vector({
+          source: new ol.source.Vector({
+          features: [
+             new ol.Feature({
+                geometry: new ol.geom.Point(ol.proj.fromLonLat([locationData.gpslong[county], locationData.gpslat[countx]]))
+             })
+         ]
+     })
+ });
+      map.addLayer(layer);
+      var markers = new ol.layer.Vector({
+      source: new ol.source.Vector(),
+      style: new ol.style.Style({
+      image: new ol.style.Icon({
+        anchor: [0.5, 1],
+        src: 'static/marker2.png'
+    })
+  })
+});
+      map.addLayer(markers);
+      var marker = new ol.Feature(new ol.geom.Point(ol.proj.fromLonLat([locationData.gpslong[county], locationData.gpslat[countx]])));
+      markers.getSource().addFeature(marker);
+
+      var container = document.getElementById('popup');
+      var content = document.getElementById('popup-content');
+      var closer = document.getElementById('popup-closer');
+
+      var overlay = new ol.Overlay({
+      element: container,
+      autoPan: true,
+      autoPanAnimation: {
+           duration: 250
+      }
+ });
+      map.addOverlay(overlay);
+
+      closer.onclick = function() {
+        overlay.setPosition(undefined);
+        closer.blur();
+        return false;
+ };
+     map.on('singleclick', function (event) {
+      if (map.hasFeatureAtPixel(event.pixel) === true) {
+         var coordinate = event.coordinate;
+
+         content.innerHTML = '<b>Student 1</b><br/><b>Prototype 1<b>';
+         overlay.setPosition(ol.proj.fromLonLat([locationData.gpslong[county], locationData.gpslat[countx]]));
+         overlay.setPosition(coordinate);
+     }else {
+         overlay.setPosition(undefined);
+         closer.blur();
+     }
+ });
+map.addLayer(layer);
+    </script>
+							</div>
+									
+								</div>
+						</div>	
+						</div>
+			</section>
+
+		<!-- Scripts -->
+			<script type="text/javascript" src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+			<script type="text/javascript" src="{{ url_for('static', filename='js/jquery.scrollex.min.js') }}"></script>
+			<script type="text/javascript" src="{{ url_for('static', filename='js/skel.min.js') }}"></script>
+			<script type="text/javascript" src="{{ url_for('static', filename='js/util.js') }}"></script>
+			<script type="text/javascript" src="{{ url_for('static', filename='js/main.js') }}"></script>
+
+	</body>
+</html>

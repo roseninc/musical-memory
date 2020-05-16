@@ -1,0 +1,64 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Graphs</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}" />
+	</head>
+	<body class="subpage">
+		<!-- Header -->
+			<header id="header">
+				<div class="logo"><a href="{{ url_for('home') }}">Main Page</a></div>
+				<a href="#menu">Menu</a>
+			</header>
+
+		<!-- Nav -->
+			<nav id="menu">
+				<ul class="links">
+					<li><a href="{{ url_for('home') }}">Home</a></li>
+					<li><a href="{{ url_for('data') }}">Live Data</a></li>
+					<li><a href="{{ url_for('database') }}">Database</a></li>
+					<li><a href="{{ url_for('map') }}">Map</a></li>
+					
+				</ul>
+			</nav>
+
+		<!-- One -->
+			<section class="banner half">
+				<article>
+					<img src="{{ url_for('static', filename='motherboard.jpg') }}" alt="" />
+					<div class="inner">
+						<header>
+							<h2><b>GRAPHS</b></h2>
+						</header>
+					</div>
+				</article>
+			</section>
+
+		<!-- Two -->
+			<section id="two" class="wrapper style2">
+				<div class="inner">
+					<div class="box">
+						<div class="content">
+							<div align = "center">
+								<div style="display: flex;">
+									<div style="flex: 50%; padding: 5px;"><iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/1055881/charts/1?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=60&title=Humidity&type=line&xaxis=Time&yaxis=Humidity+level"></iframe></div>
+									<div style="flex: 50%; padding: 5px;"><iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/1055881/charts/2?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=60&title=Temperature&type=line&xaxis=Time&yaxis=Celsius"></iframe></div>
+								</div>
+								<div style="padding: 20px;"><iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/1055881/charts/3?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=60&title=Light+conditions&type=line&xaxis=Time&yaxis=Light+level&yaxismax=6&yaxismin=0"></iframe></div>
+							</div>
+							</div>
+						</div>	
+						</div>
+			</section>
+
+		<!-- Scripts -->
+			<script type="text/javascript" src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+			<script type="text/javascript" src="{{ url_for('static', filename='js/jquery.scrollex.min.js') }}"></script>
+			<script type="text/javascript" src="{{ url_for('static', filename='js/skel.min.js') }}"></script>
+			<script type="text/javascript" src="{{ url_for('static', filename='js/util.js') }}"></script>
+			<script type="text/javascript" src="{{ url_for('static', filename='js/main.js') }}"></script>
+
+	</body>
+</html>
