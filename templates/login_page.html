@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome to the login page</title>
+    <link rel="stylesheet" type="text/css" href="../static/css/login_page.css">
+</head>
+<body>
+    <div class="loginbox">
+        <img src="../static/avatar.png" class="avatar">
+        <h1>Login Here</h1>
+        <form>
+            <p>User name</p>
+            <input type="text" name="name" id="username" placeholder="Enter username">
+            <p>Password</p>
+            <input type="password" name="password" id="password" placeholder="Enter password">
+            <input type="submit" name="login" value="Login" onclick="return trylogin()">
+        </form>
+    </div>
+<script language="JavaScript">
+    {% for data in login_data %}
+function trylogin(){var a=document.getElementById("username").value,b=document.getElementById("password").value;if("{{data.user_name}}"==a&&"{{data.password}}"==b)return window.location.href="/home",!1;alert("Password or User Name is incorrect");location.reload()};
+    {% endfor %}
+</script>
+</body>
+</html>
+
