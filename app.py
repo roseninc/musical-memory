@@ -25,8 +25,21 @@ class climate(db.Model):
         self.gpslong = gpslong
         self.light = light
 
+class login(db.Model):
+    user_name = db.Column(db.Text, primary_key = True)
+    password = db.Column(db.Integer)
 
-@app.route("/")
+    def __init__(self, user_name, password):
+        self.user_name = user_name
+        self.password = password
+
+@app.route('/')
+def login_page():
+    login_data = login.query.all()
+    return render_template("login_page.html", login_data = login_data)
+
+
+@app.route("/home")
 def home():
     return render_template("index.html")
 
@@ -55,4 +68,4 @@ def graphs():
 
 
 if __name__ == "__main__":
-    app.run(threaded=True, host='0.0.0.0', port=80)
+    app.run(debug=True)
