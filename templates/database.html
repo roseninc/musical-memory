@@ -7,6 +7,28 @@
 		<link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}" />
 	</head>
 	<body class="subpage">
+	<script>
+	var database = {
+		gpslong : [{% for data in myClimate %}
+				{{ data.gpslong }},
+				{% endfor %}],
+		gpslat : [{% for data in myClimate %}
+				{{ data.gpslat }},
+				{% endfor %}],
+		temp : [{% for data in myClimate %}
+				{{ data.temp }},
+				{% endfor %}],
+		hum : [{% for data in myClimate %}
+				{{ data.hum }},
+				{% endfor %}],
+		light : [{% for data in myClimate %}
+				{{ data.light }},
+				{% endfor %}],
+		time : 	[{% for data in myClimate %}
+				new Date("{{ data.reading_time }}"),
+				{% endfor %}],
+		}
+	</script>
 		<!-- Header -->
 			<header id="header">
 				<div class="logo"><a href="{{ url_for('home') }}">Main Page</a></div>
@@ -45,15 +67,15 @@
 										<thead>
 										<tr><th><div align = "center">TIME</div></th><th><div align = "center">TEMPERATURE</div></th><th><div align = "center">HUMIDITY</div></th><th><div align = "center">GPS LATITUDE & LONGITUDE</div></th><th><div align = "center">LIGHT LEVEL</div></th></tr>
 										</thead>
-												{% for mydata in myClimate %}
 										<tbody>
+										{% for data in range(15) %}
 											<tr class="spaceUnder">
-												<td style="width:20%"><div align = "center">{{ mydata.reading_time }}</td>
-												<td style="width:15%"><div align = "center">{{ mydata.temp }}</td>
-												<td style="width:10%"><div align = "center">{{ mydata.hum }}</td>
-												<td style="width:38%"><div align = "center">{{ mydata.gpslat }}, {{ mydata.gpslong }} </td>
-												<td style="width:20%"><div align = "center">{{ mydata.light }}</td>
-												{%  endfor %}
+												<td style="width:20%"><div align = "center"><script>document.write(database.time[{{data}}]);</script></div></td>
+												<td style="width:15%"><div align = "center"><script>document.write(database.temp[{{data}}]);</script></div></td>
+												<td style="width:10%"><div align = "center"><script>document.write(database.hum[{{data}}]);</script></div></td>
+												<td style="width:38%"><div align = "center"><script>document.write(database.gpslat[{{data}}]); document.write(" ; "); document.write(database.gpslong[{{data}}]);</script></div></td>
+												<td style="width:20%"><div align = "center"><script>document.write(database.light[{{data}}]);</script></div></td>
+										{% endfor %}
 									</table>
 								</div>
 						</div>
